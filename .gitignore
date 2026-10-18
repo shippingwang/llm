@@ -1,0 +1,7 @@
+.notion_preview/
+__pycache__/
+*.pyc
+.env
+.env.*
+网站/site/
+网站/shippingwang-site.zip
