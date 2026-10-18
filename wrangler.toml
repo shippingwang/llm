@@ -1,0 +1,4 @@
+name = "llm"
+compatibility_date = "2026-10-18"
+[assets]
+directory = "网站/site"
