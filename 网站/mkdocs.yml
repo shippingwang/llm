@@ -1,5 +1,5 @@
-site_name: 现代大模型：做模型、跑模型、改模型
-site_description: 面向深度学习工程师的现代大模型技术丛书
+site_name: 现代大模型
+site_description: 现代大模型技术丛书
 site_author: ""
 site_url: https://shippingwang.com/book/llm/
 
@@ -15,25 +15,23 @@ theme:
   # 关闭 Google Fonts，避免国内首屏卡死；中文用系统字体（见 extra.css）
   font: false
   features:
-    - navigation.tabs
     - navigation.sections
     - navigation.indexes
     - navigation.top
     - navigation.footer
     - toc.follow
     - search.highlight
-    - search.share
     - content.code.copy
   palette:
     - scheme: default
-      primary: brown
-      accent: green
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: 切换到深色模式
     - scheme: slate
-      primary: black
-      accent: green
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: 切换到浅色模式

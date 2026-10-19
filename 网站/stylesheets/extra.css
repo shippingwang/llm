@@ -1,35 +1,115 @@
 :root {
-  /* 水墨田园：宣纸底 + 苔绿点缀；中文优先系统宋体/黑体 */
+  /* 与主站同一套水墨 token */
+  --ink: #2a2a28;
+  --ink-soft: #5c5a54;
+  --paper: #f3efe6;
+  --paper-deep: #e7e0d2;
+  --moss: #4a6b4e;
+  --line: rgba(42, 42, 40, 0.12);
+
   --md-text-font: "Songti SC", "Noto Serif SC", "PingFang SC", "Microsoft YaHei", serif;
   --md-code-font: "SFMono-Regular", Consolas, "JetBrains Mono", Menlo, monospace;
-  --md-default-bg-color: #f3efe6;
-  --md-default-fg-color: #2a2a28;
-  --md-default-fg-color--light: #5c5a54;
+  --md-default-bg-color: var(--paper);
+  --md-default-fg-color: var(--ink);
+  --md-default-fg-color--light: var(--ink-soft);
   --md-default-fg-color--lighter: #8a867c;
-  --md-default-fg-color--lightest: rgba(42, 42, 40, 0.12);
-  --md-primary-fg-color: #f3efe6;
-  --md-primary-bg-color: #2a2a28;
-  --md-accent-fg-color: #4a6b4e;
-  --md-code-bg-color: #e7e0d2;
-  --md-typeset-a-color: #4a6b4e;
+  --md-default-fg-color--lightest: var(--line);
+  /* primary = 顶栏底；图标/字用 ink，避免棕/灰搜不到 */
+  --md-primary-fg-color: var(--paper);
+  --md-primary-fg-color--light: var(--paper);
+  --md-primary-fg-color--dark: var(--paper-deep);
+  --md-primary-bg-color: var(--ink);
+  --md-accent-fg-color: var(--moss);
+  --md-code-bg-color: var(--paper-deep);
+  --md-typeset-a-color: var(--moss);
 }
 
 [data-md-color-scheme="slate"] {
-  --md-default-bg-color: #1a1c18;
-  --md-default-fg-color: #e8e4d8;
-  --md-default-fg-color--light: #b8b4a8;
+  --ink: #e8e4d8;
+  --ink-soft: #b8b4a8;
+  --paper: #1a1c18;
+  --paper-deep: #252820;
+  --moss: #8fbc8f;
+  --line: rgba(232, 228, 216, 0.14);
+
+  --md-default-bg-color: var(--paper);
+  --md-default-fg-color: var(--ink);
+  --md-default-fg-color--light: var(--ink-soft);
   --md-default-fg-color--lighter: #8a867c;
-  --md-default-fg-color--lightest: rgba(232, 228, 216, 0.14);
-  --md-primary-fg-color: #1a1c18;
-  --md-primary-bg-color: #e8e4d8;
-  --md-accent-fg-color: #8fbc8f;
-  --md-code-bg-color: #252820;
-  --md-typeset-a-color: #8fbc8f;
+  --md-default-fg-color--lightest: var(--line);
+  --md-primary-fg-color: var(--paper);
+  --md-primary-fg-color--light: var(--paper);
+  --md-primary-fg-color--dark: var(--paper-deep);
+  --md-primary-bg-color: var(--ink);
+  --md-accent-fg-color: var(--moss);
+  --md-code-bg-color: var(--paper-deep);
+  --md-typeset-a-color: var(--moss);
+}
+
+/* 顶栏：主站同款宣纸半透明，不要 Material 彩带/厚阴影 */
+.md-tabs {
+  display: none;
 }
 
 .md-header {
-  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
   box-shadow: none;
+  backdrop-filter: blur(10px);
+}
+
+.md-header__title,
+.md-header .md-header__button {
+  color: var(--ink);
+}
+
+.md-header .md-header__button:hover {
+  opacity: 1;
+  color: var(--moss);
+}
+
+.md-header__topic:first-child {
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+/* 搜索：固定纸色底，hover/focus 不透明 */
+.md-search__form {
+  background-color: var(--paper-deep) !important;
+  border: 1px solid var(--line);
+  box-shadow: none !important;
+}
+
+.md-search__form:hover,
+.md-search__form:focus-within {
+  background-color: var(--paper) !important;
+  border-color: var(--moss);
+}
+
+.md-search__input {
+  color: var(--ink);
+  background: transparent;
+}
+
+.md-search__input::placeholder {
+  color: var(--ink-soft);
+  opacity: 1;
+}
+
+.md-search__input + .md-search__icon,
+.md-search__options .md-icon,
+.md-search__icon[for="__search"] {
+  color: var(--ink-soft);
+}
+
+.md-search__input:focus + .md-search__icon,
+.md-search__form:hover .md-search__icon {
+  color: var(--moss);
+}
+
+[data-md-toggle="search"]:checked ~ .md-header .md-search__form {
+  background-color: var(--paper) !important;
 }
 
 .md-sidebar--primary .md-nav__title {
@@ -77,10 +157,6 @@
 .md-sidebar--primary .book-section-4 { --section-color: #5c7a62; }
 .md-sidebar--primary .book-section-5 { --section-color: #7a6a4a; }
 .md-sidebar--primary .book-section-appendix { --section-color: #7a756c; }
-
-.md-header {
-  background: color-mix(in srgb, var(--md-default-bg-color) 92%, transparent);
-}
 
 .md-typeset h2 {
   border-bottom-color: color-mix(in srgb, var(--md-accent-fg-color) 28%, transparent);
@@ -168,65 +244,28 @@
   border-radius: 0.25rem;
 }
 
-.hero-copy {
-  max-width: 760px;
-  margin: -0.5rem 0 2.2rem;
-  color: var(--md-default-fg-color--light);
-  font-size: 1rem;
-  line-height: 1.8;
+/* 书架：主站 list 同款按行 */
+.book-list {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem 0 3rem;
+  border-top: 1px solid var(--line);
 }
 
-.book-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 2rem 0 3rem;
-}
-
-.book-card {
+.book-list a {
   display: block;
-  min-height: 210px;
-  padding: 1.4rem;
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 0.75rem;
-  color: inherit !important;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink) !important;
+  font-size: 1.15rem;
+  letter-spacing: 0.1em;
   text-decoration: none;
-  transition: border-color 120ms ease, transform 120ms ease;
+  transition: color 160ms ease, padding-left 160ms ease;
 }
 
-.book-card:hover {
-  border-color: var(--md-accent-fg-color);
-  transform: translateY(-2px);
-}
-
-.book-card h2 {
-  margin: 0.8rem 0;
-  padding: 0;
-  border: 0;
-  font-size: 1.1rem;
-}
-
-.book-card p {
-  margin: 0;
-  color: var(--md-default-fg-color--light);
-  font-size: 0.72rem;
-}
-
-.book-number {
-  color: var(--md-accent-fg-color);
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-}
-
-@media screen and (max-width: 900px) {
-  .book-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .book-card {
-    min-height: auto;
-  }
+.book-list a:hover {
+  color: var(--moss) !important;
+  padding-left: 0.35rem;
 }
 
 /* —— 手机阅读 —— */
@@ -258,14 +297,9 @@
     font-size: 1.25em;
   }
 
-  .hero-copy {
-    max-width: 100%;
-    margin: 0 0 1.4rem;
-    font-size: 0.95rem;
-  }
-
-  .book-card {
-    padding: 1.15rem;
+  .book-list a {
+    font-size: 1.05rem;
+    padding: 1rem 0;
   }
 
   /* 数据流：手机上整宽，按钮常显（无 hover） */

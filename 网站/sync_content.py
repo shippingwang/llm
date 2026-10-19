@@ -98,37 +98,13 @@ hide:
   - toc
 ---
 
-# 现代大模型：做模型、跑模型、改模型
+# 现代大模型
 
-<div class="hero-copy">
-面向懂深度学习、希望系统补齐现代大模型技术的工程师。从 Transformer 架构出发，走到训练推理系统、后训练与智能体。
+<div class="book-list">
+  <a href="01-architecture/">第一册 · 现代大模型架构</a>
+  <a href="02-systems/">第二册 · 训练与推理系统</a>
+  <a href="03-post-training/">第三册 · 后训练与智能体系统</a>
 </div>
-
-<div class="book-grid">
-  <a class="book-card" href="01-architecture/">
-    <span class="book-number">BOOK 01 · 做模型</span>
-    <h2>现代大模型架构</h2>
-    <p>Transformer、稠密模型、MoE、长上下文、混合架构与 Qwen3.8。</p>
-  </a>
-  <a class="book-card" href="02-systems/">
-    <span class="book-number">BOOK 02 · 跑模型</span>
-    <h2>训练与推理系统</h2>
-    <p>分布式训练、推理引擎、量化、Kernel、生产服务与端侧部署。</p>
-  </a>
-  <a class="book-card" href="03-post-training/">
-    <span class="book-number">BOOK 03 · 改模型</span>
-    <h2>后训练与智能体系统</h2>
-    <p>SFT、蒸馏、偏好对齐、RLVR、评测、RAG、Agent 与 Harness。</p>
-  </a>
-</div>
-
-## 阅读路径
-
-三册不是相互独立的术语手册，而是一条完整工程链：
-
-**第一册定义模型如何计算 → 第二册解释计算如何高效运行 → 第三册说明如何改变模型行为并证明改对了。**
-
-如果你已经熟悉其中一部分，可以直接从对应册开始；每册都会在边界处回指另外两册。
 """
 
 
