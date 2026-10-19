@@ -1,7 +1,7 @@
 site_name: 现代大模型：做模型、跑模型、改模型
 site_description: 面向深度学习工程师的现代大模型技术丛书
 site_author: ""
-site_url: https://shippingwang.com/
+site_url: https://shippingwang.com/book/llm/
 
 docs_dir: docs
 site_dir: site
