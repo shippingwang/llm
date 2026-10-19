@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block header %}
+<header class="sw-topnav" data-md-component="sw-topnav">
+  <div class="sw-topnav__inner">
+    <a class="sw-topnav__brand" href="https://shippingwang.com/">
+      <img class="sw-topnav__mark" src="https://shippingwang.com/assets/favicon.png" alt="" width="28" height="28" />
+      shippingwang
+    </a>
+    <nav class="sw-topnav__links" aria-label="site">
+      <a href="https://shippingwang.com/research/">research</a>
+      <a class="is-active" href="https://shippingwang.com/book/">book</a>
+      <a href="https://shippingwang.com/life/">life</a>
+      <a href="https://shippingwang.com/idea/">idea</a>
+    </nav>
+  </div>
+</header>
+{{ super() }}
+{% endblock %}

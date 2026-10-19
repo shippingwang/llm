@@ -108,22 +108,6 @@ hide:
 """
 
 
-ABOUT = """\
-# 关于这套书
-
-这套书面向已经掌握 CNN、ViT 和常规深度学习训练，但尚未系统进入现代大模型领域的工程师。
-
-写作原则：
-
-- 先讲问题，再引入技术名称。
-- 讲清机制、输入输出和失败方式，不只给概念定义。
-- 架构、系统、后训练三册边界明确，但关键接口互相引用。
-- 每个工程结论都尽量落实到显存、计算、通信、数据或评测。
-
-书稿仍在持续修订。网站内容由 `书稿/` 自动生成，请不要直接修改生成后的 `网站/docs/`。
-"""
-
-
 def split_h1(markdown):
     """Split Markdown into complete sections starting with a level-one heading.
 
@@ -392,7 +376,6 @@ def main():
     (DOCS / "assets").mkdir(parents=True, exist_ok=True)
 
     write_text(DOCS / "index.md", HOME, written, changed)
-    write_text(DOCS / "about.md", ABOUT, written, changed)
     copy_asset(
         HERE / "assets" / "favicon.png",
         DOCS / "assets" / "favicon.png",

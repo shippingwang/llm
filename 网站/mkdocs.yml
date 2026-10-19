@@ -12,6 +12,7 @@ exclude_docs: |
 theme:
   name: material
   language: zh
+  custom_dir: overrides
   # 关闭 Google Fonts，避免国内首屏卡死；中文用系统字体（见 extra.css）
   font: false
   features:
