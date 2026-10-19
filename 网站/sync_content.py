@@ -368,6 +368,50 @@ def prune_orphans(written, changed):
             path.rmdir()
 
 
+def _page_nav_title(path: Path) -> str:
+    text = path.read_text(encoding="utf-8")
+    m = re.search(r'(?m)^title:\s*"(.*)"\s*$', text)
+    if m:
+        return m.group(1).strip()
+    m = re.search(r"(?m)^#\s+(.+?)\s*$", text)
+    if m:
+        return m.group(1).strip()
+    return path.stem
+
+
+def build_nav_yaml() -> str:
+    """显式 nav：中文册名，避免侧栏出现 01 architecture。"""
+    lines = ["nav:", '  - "现代大模型": index.md']
+    for book in BOOKS:
+        directory = book["directory"]
+        title = book["title"].replace('"', '\\"')
+        lines.append(f'  - "{title}":')
+        lines.append(f"    - {directory}/index.md")
+        pages = sorted((DOCS / directory).glob("[0-9][0-9].md"))
+        for page in pages:
+            page_title = _page_nav_title(page).replace('"', '\\"')
+            lines.append(f'    - "{page_title}": {directory}/{page.name}')
+    return "\n".join(lines) + "\n"
+
+
+def write_mkdocs_nav() -> None:
+    mkdocs = HERE / "mkdocs.yml"
+    text = mkdocs.read_text(encoding="utf-8")
+    begin, end = "# BEGIN_NAV", "# END_NAV"
+    block = f"{begin}\n{build_nav_yaml()}{end}"
+    if begin in text and end in text:
+        text = re.sub(
+            re.escape(begin) + r".*?" + re.escape(end),
+            block,
+            text,
+            count=1,
+            flags=re.S,
+        )
+    else:
+        text = text.rstrip() + "\n\n" + block + "\n"
+    mkdocs.write_text(text, encoding="utf-8")
+
+
 def main():
     written = set()
     changed = set()
@@ -411,6 +455,7 @@ def main():
         write_book(book, written, changed)
 
     prune_orphans(written, changed)
+    write_mkdocs_nav()
     page_count = len(list(DOCS.rglob("*.md")))
     print(
         f"Generated {page_count} Markdown pages in {DOCS}"

@@ -1,120 +1,133 @@
-:root {
-  /* 与主站同一套水墨 token */
-  --ink: #2a2a28;
-  --ink-soft: #5c5a54;
-  --paper: #f3efe6;
-  --paper-deep: #e7e0d2;
-  --moss: #4a6b4e;
-  --line: rgba(42, 42, 40, 0.12);
+/* 书站样式：白底 + 轻量强调；不改 Material 布局 */
 
-  --md-text-font: "Songti SC", "Noto Serif SC", "PingFang SC", "Microsoft YaHei", serif;
+:root {
+  --ink: #1f2937;
+  --ink-soft: #6b7280;
+  --line: rgba(15, 23, 42, 0.1);
+  --accent: #2563eb;
+  --md-text-font: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Helvetica Neue", sans-serif;
   --md-code-font: "SFMono-Regular", Consolas, "JetBrains Mono", Menlo, monospace;
-  --md-default-bg-color: var(--paper);
+}
+
+:root,
+:root > * {
+  --md-default-bg-color: #ffffff;
   --md-default-fg-color: var(--ink);
   --md-default-fg-color--light: var(--ink-soft);
-  --md-default-fg-color--lighter: #8a867c;
+  --md-default-fg-color--lighter: #9ca3af;
   --md-default-fg-color--lightest: var(--line);
-  /* primary = 顶栏底；图标/字用 ink，避免棕/灰搜不到 */
-  --md-primary-fg-color: var(--paper);
-  --md-primary-fg-color--light: var(--paper);
-  --md-primary-fg-color--dark: var(--paper-deep);
+  --md-primary-fg-color: #ffffff;
+  --md-primary-fg-color--light: #ffffff;
+  --md-primary-fg-color--dark: #f3f4f6;
   --md-primary-bg-color: var(--ink);
-  --md-accent-fg-color: var(--moss);
-  --md-code-bg-color: var(--paper-deep);
-  --md-typeset-a-color: var(--moss);
+  --md-accent-fg-color: var(--accent);
+  --md-typeset-a-color: var(--accent);
+  --md-code-bg-color: #f3f4f6;
 }
 
 [data-md-color-scheme="slate"] {
-  --ink: #e8e4d8;
-  --ink-soft: #b8b4a8;
-  --paper: #1a1c18;
-  --paper-deep: #252820;
-  --moss: #8fbc8f;
-  --line: rgba(232, 228, 216, 0.14);
+  --ink: #e5e7eb;
+  --ink-soft: #9ca3af;
+  --line: rgba(229, 231, 235, 0.14);
+  --accent: #93c5fd;
+}
 
-  --md-default-bg-color: var(--paper);
+[data-md-color-scheme="slate"],
+[data-md-color-scheme="slate"] > * {
+  --md-default-bg-color: #0f172a;
   --md-default-fg-color: var(--ink);
   --md-default-fg-color--light: var(--ink-soft);
-  --md-default-fg-color--lighter: #8a867c;
+  --md-default-fg-color--lighter: #6b7280;
   --md-default-fg-color--lightest: var(--line);
-  --md-primary-fg-color: var(--paper);
-  --md-primary-fg-color--light: var(--paper);
-  --md-primary-fg-color--dark: var(--paper-deep);
+  --md-primary-fg-color: #0f172a;
+  --md-primary-fg-color--light: #0f172a;
+  --md-primary-fg-color--dark: #1e293b;
   --md-primary-bg-color: var(--ink);
-  --md-accent-fg-color: var(--moss);
-  --md-code-bg-color: var(--paper-deep);
-  --md-typeset-a-color: var(--moss);
+  --md-accent-fg-color: var(--accent);
+  --md-typeset-a-color: var(--accent);
+  --md-code-bg-color: #1e293b;
 }
 
-/* 顶栏：主站同款宣纸半透明，不要 Material 彩带/厚阴影 */
-.md-tabs {
-  display: none;
-}
+.md-tabs { display: none; }
 
 .md-header {
-  top: 3.25rem;
-  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  background: #ffffff;
   color: var(--ink);
   border-bottom: 1px solid var(--line);
-  box-shadow: none;
-  backdrop-filter: blur(10px);
+  box-shadow: none !important;
 }
+
+[data-md-color-scheme="slate"] .md-header {
+  background: #0f172a;
+}
+
+.md-header--shadow { box-shadow: none !important; }
 
 .md-header__title,
 .md-header .md-header__button {
   color: var(--ink);
 }
 
-.md-header .md-header__button:hover {
-  opacity: 1;
-  color: var(--moss);
+.md-logo img {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 0.2rem;
+  object-fit: cover;
 }
 
-.md-header__topic:first-child {
-  font-weight: 400;
-  letter-spacing: 0.08em;
+.sw-header__links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem 1.1rem;
+  margin: 0 0.75rem 0 0.25rem;
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
-/* 搜索：固定纸色底，hover/focus 不透明 */
+.sw-header__links a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.sw-header__links a:hover,
+.sw-header__links a.is-active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+@media screen and (max-width: 720px) {
+  .sw-header__links { display: none; }
+}
+
 .md-search__form {
-  background-color: var(--paper-deep) !important;
+  background: #f3f4f6 !important;
   border: 1px solid var(--line);
   box-shadow: none !important;
 }
 
+[data-md-color-scheme="slate"] .md-search__form {
+  background: #1e293b !important;
+}
+
 .md-search__form:hover,
 .md-search__form:focus-within {
-  background-color: var(--paper) !important;
-  border-color: var(--moss);
+  background: #ffffff !important;
+  border-color: var(--accent);
 }
 
-.md-search__input {
-  color: var(--ink);
-  background: transparent;
+[data-md-color-scheme="slate"] .md-search__form:hover,
+[data-md-color-scheme="slate"] .md-search__form:focus-within {
+  background: #0f172a !important;
 }
 
-.md-search__input::placeholder {
-  color: var(--ink-soft);
-  opacity: 1;
-}
+.md-search__input { color: var(--ink); }
+.md-search__input::placeholder { color: var(--ink-soft); opacity: 1; }
 
-.md-search__input + .md-search__icon,
-.md-search__options .md-icon,
-.md-search__icon[for="__search"] {
-  color: var(--ink-soft);
-}
-
-.md-search__input:focus + .md-search__icon,
-.md-search__form:hover .md-search__icon {
-  color: var(--moss);
-}
-
-[data-md-toggle="search"]:checked ~ .md-header .md-search__form {
-  background-color: var(--paper) !important;
-}
-
+/* —— 侧栏：最早那版白底 + 各部分色条 —— */
 .md-sidebar--primary .md-nav__title {
-  color: var(--md-default-fg-color--light);
+  color: var(--ink-soft);
   font-size: 0.64rem;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -130,64 +143,64 @@
 }
 
 .md-sidebar--primary .md-nav__link:hover {
-  background: color-mix(in srgb, var(--moss) 10%, transparent);
+  background: rgba(37, 99, 235, 0.06);
   color: var(--ink);
 }
 
-/* Material 默认用 primary-fg 给选中项上色；我们 primary 是纸色，会变白看不清 */
-.md-sidebar--primary .md-nav__item--active > .md-nav__link,
-.md-sidebar--primary .md-nav__item--active > .md-nav__link.md-nav__link--active,
-.md-sidebar--primary .md-nav__link--active,
-.md-sidebar--primary .md-nav__container .md-nav__link--active,
-.md-sidebar--secondary .md-nav__link--active {
+/* 只给真正的链接上底色，别给 .md-nav__container 再铺一层（会套娃色块） */
+.md-sidebar--primary a.md-nav__link--active,
+.md-sidebar--primary .md-nav__item--active > a.md-nav__link,
+.md-sidebar--secondary a.md-nav__link--active {
   color: var(--ink) !important;
-  background: color-mix(in srgb, var(--moss) 16%, transparent);
+  background: rgba(37, 99, 235, 0.1);
   font-weight: 700;
 }
 
-.md-sidebar--primary .book-nav-hidden {
+.md-sidebar--primary .md-nav__container {
+  background: transparent !important;
+}
+
+.md-sidebar--primary .md-nav__container > .md-nav__link--active:not(a) {
+  background: transparent !important;
+}
+
+/*
+ * 只显示当前册（用 --active，不用 href；册内链接是 ./、01/）
+ */
+html[data-book] .md-nav--primary > .md-nav__list > .md-nav__item--nested:not(.md-nav__item--active) {
   display: none !important;
 }
 
-.md-sidebar--primary .book-nav-shelf > .md-nav__link {
-  color: var(--ink-soft);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+html[data-book] .md-nav--primary > .md-nav__list > .md-nav__item:not(.md-nav__item--nested) {
+  display: none !important;
 }
 
+/* 各「部分」色条：和最初白底版一致 */
 .md-sidebar--primary .book-section-start {
-  --section-color: var(--md-accent-fg-color);
+  --section-color: #2563eb;
   margin-top: 0.75rem;
   padding-top: 0.72rem;
-  border-top: 1px solid var(--md-default-fg-color--lightest);
+  border-top: 1px solid var(--line);
 }
 
-.md-sidebar--primary .book-section-start > .md-nav__link {
+/* 只样式 a，不样式 .md-nav__container（它也带 md-nav__link class） */
+.md-sidebar--primary .book-section-start > a.md-nav__link,
+.md-sidebar--primary .book-section-start > .md-nav__container > a.md-nav__link {
   padding: 0.42rem 0.6rem;
   border-left: 3px solid var(--section-color);
   background: color-mix(in srgb, var(--section-color) 9%, transparent);
-  color: var(--md-default-fg-color);
+  color: var(--ink);
   font-weight: 750;
 }
 
-.md-sidebar--primary .book-section-1 { --section-color: #4a6b4e; }
-.md-sidebar--primary .book-section-2 { --section-color: #6b8f6e; }
-.md-sidebar--primary .book-section-3 { --section-color: #8b6914; }
-.md-sidebar--primary .book-section-4 { --section-color: #5c7a62; }
-.md-sidebar--primary .book-section-5 { --section-color: #7a6a4a; }
-.md-sidebar--primary .book-section-appendix { --section-color: #7a756c; }
+.md-sidebar--primary .book-section-1 { --section-color: #2563eb; }
+.md-sidebar--primary .book-section-2 { --section-color: #7c3aed; }
+.md-sidebar--primary .book-section-3 { --section-color: #db2777; }
+.md-sidebar--primary .book-section-4 { --section-color: #059669; }
+.md-sidebar--primary .book-section-5 { --section-color: #d97706; }
+.md-sidebar--primary .book-section-appendix { --section-color: #64748b; }
 
-.md-typeset h2 {
-  border-bottom-color: color-mix(in srgb, var(--md-accent-fg-color) 28%, transparent);
-}
-
-.md-typeset blockquote {
-  border-left-color: var(--md-accent-fg-color);
-}
-
-.md-main__inner {
-  max-width: 1440px;
-}
+.md-main__inner { max-width: 1440px; }
 
 .md-content__inner {
   max-width: 880px;
@@ -202,11 +215,7 @@
   word-break: break-word;
 }
 
-/* 插图、宽公式、表格：别撑破视口 */
-.md-typeset img {
-  max-width: 100%;
-  height: auto;
-}
+.md-typeset img { max-width: 100%; height: auto; }
 
 .md-typeset .arithmatex {
   max-width: 100%;
@@ -215,9 +224,7 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.md-typeset div.arithmatex {
-  padding-bottom: 0.15rem;
-}
+.md-typeset div.arithmatex { padding-bottom: 0.15rem; }
 
 .md-typeset pre,
 .md-typeset .highlight {
@@ -238,194 +245,63 @@
 }
 
 .md-typeset h1 {
-  margin-bottom: 1.6rem;
-  font-weight: 750;
-  letter-spacing: -0.025em;
-}
-
-.md-typeset h2 {
-  margin-top: 2.4rem;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  margin-bottom: 1.4rem;
   font-weight: 700;
 }
 
-.md-typeset h3 {
+.md-typeset h2 {
+  margin-top: 2.2rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--line);
   font-weight: 650;
 }
 
-.md-typeset blockquote {
-  border-left: 3px solid var(--md-accent-fg-color);
-  color: var(--md-default-fg-color--light);
-}
-
-.md-typeset code {
-  border-radius: 0.25rem;
-}
-
-/* 主站顶栏（overrides/main.html） */
-.sw-topnav {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(10px);
-}
-
-.sw-topnav__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  width: min(100% - 2.4rem, 1440px);
-  margin-inline: auto;
-  min-height: 3.25rem;
-}
-
-.sw-topnav__brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  color: var(--ink);
-  font-size: 1.05rem;
-  letter-spacing: 0.12em;
-  text-decoration: none;
-}
-
-.sw-topnav__mark {
-  width: 1.45rem;
-  height: 1.45rem;
-  border-radius: 0.2rem;
-  object-fit: cover;
-  border: 1px solid var(--line);
-  background: var(--paper-deep);
-}
-
-.sw-topnav__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem 1.25rem;
-  font-size: 0.92rem;
-  letter-spacing: 0.08em;
-}
-
-.sw-topnav__links a {
-  color: var(--ink-soft);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  padding-bottom: 0.1rem;
-}
-
-.sw-topnav__links a:hover,
-.sw-topnav__links a.is-active {
-  color: var(--ink);
-  border-bottom-color: var(--moss);
-}
-
-/* Material 顶栏叠在主站顶栏下：去掉第二层品牌名，只留搜索/目录/主题 */
-.md-header__title .md-header__topic:first-child {
-  display: none;
-}
-
-@media screen and (max-width: 600px) {
-  .sw-topnav__brand {
-    letter-spacing: 0.06em;
-    font-size: 0.95rem;
-  }
-
-  .sw-topnav__links {
-    gap: 0.65rem 0.9rem;
-    font-size: 0.82rem;
-  }
-}
-
-/* 书架：主站 list 同款按行；首页标题别撑太大 */
 .md-typeset:has(.book-list) > h1 {
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.1rem;
   font-size: 1.35rem;
-  font-weight: 400;
-  letter-spacing: 0.14em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 .book-list {
   display: flex;
   flex-direction: column;
-  margin: 0 0 3rem;
+  margin: 0 0 2.5rem;
   border-top: 1px solid var(--line);
 }
 
 .book-list a {
   display: block;
-  padding: 0.95rem 0;
+  padding: 0.9rem 0;
   border-bottom: 1px solid var(--line);
   color: var(--ink) !important;
-  font-size: 1.02rem;
-  letter-spacing: 0.08em;
+  font-size: 1rem;
   text-decoration: none;
-  transition: color 160ms ease, padding-left 160ms ease;
 }
 
 .book-list a:hover {
-  color: var(--moss) !important;
-  padding-left: 0.35rem;
+  color: var(--accent) !important;
+  padding-left: 0.25rem;
 }
 
-/* —— 手机阅读 —— */
-@media screen and (max-width: 76.1875em) {
-  /* Material 在此宽度下收起侧栏；正文别再被大 max-width / 大边距挤扁 */
-  .md-main__inner {
-    margin-top: 0.25rem;
-  }
+/* 版权别叠在侧栏上 */
+.md-copyright { display: none; }
 
+@media screen and (max-width: 76.1875em) {
+  .md-main__inner { margin-top: 0.25rem; }
   .md-content__inner {
     max-width: 100%;
     margin-inline: 0;
     padding-bottom: 3.5rem;
   }
-
-  .md-typeset {
-    font-size: 0.84rem;
-    line-height: 1.8;
-  }
-
-  .md-typeset h1 {
-    margin-bottom: 1.1rem;
-    font-size: 1.55em;
-    line-height: 1.3;
-  }
-
-  .md-typeset h2 {
-    margin-top: 1.8rem;
-    font-size: 1.25em;
-  }
-
-  .book-list a {
-    font-size: 1.05rem;
-    padding: 1rem 0;
-  }
-
-  /* 数据流：手机上整宽，按钮常显（无 hover） */
-  .formula-flow-host > .arithmatex {
-    padding: 0.55rem 0.65rem 0.65rem;
-  }
-
-  .formula-flow-badge {
-    opacity: 1;
-  }
-
-  .formula-flow-pop {
-    padding: 0.75rem 0.7rem 0.65rem;
-  }
-
-  .formula-flow-pop--wide {
-    max-width: 100%;
-  }
-
+  .md-typeset { font-size: 0.84rem; }
+  .formula-flow-host > .arithmatex { padding: 0.55rem 0.65rem 0.65rem; }
+  .formula-flow-badge { opacity: 1; }
+  .formula-flow-pop { padding: 0.75rem 0.7rem 0.65rem; }
+  .formula-flow-pop--wide { max-width: 100%; }
   .formula-flow-matrix__row {
     grid-template-columns: repeat(var(--ff-cols, 2), minmax(1.6rem, auto));
   }
-
   .formula-flow-matrix__cell {
     min-width: 1.6rem;
     padding: 0.1rem 0.18rem;
@@ -434,15 +310,9 @@
 }
 
 @media screen and (max-width: 30em) {
-  .md-typeset {
-    font-size: 0.88rem;
-  }
-
-  .md-typeset .md-typeset__table,
-  .md-typeset table {
-    font-size: 0.78em;
-  }
+  .md-typeset { font-size: 0.88rem; }
 }
+
 
 /* —— formula-flow nav / toc mark —— */
 .formula-flow-mark {
