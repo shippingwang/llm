@@ -1,15 +1,30 @@
 :root {
-  --md-text-font: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --md-code-font: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
-  --md-primary-fg-color: #ffffff;
-  --md-primary-bg-color: #111827;
-  --md-accent-fg-color: #4f46e5;
+  /* 水墨田园：宣纸底 + 苔绿点缀；中文优先系统宋体/黑体 */
+  --md-text-font: "Songti SC", "Noto Serif SC", "PingFang SC", "Microsoft YaHei", serif;
+  --md-code-font: "SFMono-Regular", Consolas, "JetBrains Mono", Menlo, monospace;
+  --md-default-bg-color: #f3efe6;
+  --md-default-fg-color: #2a2a28;
+  --md-default-fg-color--light: #5c5a54;
+  --md-default-fg-color--lighter: #8a867c;
+  --md-default-fg-color--lightest: rgba(42, 42, 40, 0.12);
+  --md-primary-fg-color: #f3efe6;
+  --md-primary-bg-color: #2a2a28;
+  --md-accent-fg-color: #4a6b4e;
+  --md-code-bg-color: #e7e0d2;
+  --md-typeset-a-color: #4a6b4e;
 }
 
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color: #111827;
-  --md-primary-bg-color: #f9fafb;
-  --md-accent-fg-color: #818cf8;
+  --md-default-bg-color: #1a1c18;
+  --md-default-fg-color: #e8e4d8;
+  --md-default-fg-color--light: #b8b4a8;
+  --md-default-fg-color--lighter: #8a867c;
+  --md-default-fg-color--lightest: rgba(232, 228, 216, 0.14);
+  --md-primary-fg-color: #1a1c18;
+  --md-primary-bg-color: #e8e4d8;
+  --md-accent-fg-color: #8fbc8f;
+  --md-code-bg-color: #252820;
+  --md-typeset-a-color: #8fbc8f;
 }
 
 .md-header {
@@ -56,12 +71,24 @@
   font-weight: 750;
 }
 
-.md-sidebar--primary .book-section-1 { --section-color: #2563eb; }
-.md-sidebar--primary .book-section-2 { --section-color: #7c3aed; }
-.md-sidebar--primary .book-section-3 { --section-color: #db2777; }
-.md-sidebar--primary .book-section-4 { --section-color: #059669; }
-.md-sidebar--primary .book-section-5 { --section-color: #d97706; }
-.md-sidebar--primary .book-section-appendix { --section-color: #64748b; }
+.md-sidebar--primary .book-section-1 { --section-color: #4a6b4e; }
+.md-sidebar--primary .book-section-2 { --section-color: #6b8f6e; }
+.md-sidebar--primary .book-section-3 { --section-color: #8b6914; }
+.md-sidebar--primary .book-section-4 { --section-color: #5c7a62; }
+.md-sidebar--primary .book-section-5 { --section-color: #7a6a4a; }
+.md-sidebar--primary .book-section-appendix { --section-color: #7a756c; }
+
+.md-header {
+  background: color-mix(in srgb, var(--md-default-bg-color) 92%, transparent);
+}
+
+.md-typeset h2 {
+  border-bottom-color: color-mix(in srgb, var(--md-accent-fg-color) 28%, transparent);
+}
+
+.md-typeset blockquote {
+  border-left-color: var(--md-accent-fg-color);
+}
 
 .md-main__inner {
   max-width: 1440px;
@@ -76,6 +103,43 @@
 .md-typeset {
   font-size: 0.78rem;
   line-height: 1.85;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* 插图、宽公式、表格：别撑破视口 */
+.md-typeset img {
+  max-width: 100%;
+  height: auto;
+}
+
+.md-typeset .arithmatex {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.md-typeset div.arithmatex {
+  padding-bottom: 0.15rem;
+}
+
+.md-typeset pre,
+.md-typeset .highlight {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.md-typeset .md-typeset__table {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.md-typeset .md-typeset__table table {
+  width: max-content;
+  max-width: none;
 }
 
 .md-typeset h1 {
@@ -162,6 +226,84 @@
 
   .book-card {
     min-height: auto;
+  }
+}
+
+/* —— 手机阅读 —— */
+@media screen and (max-width: 76.1875em) {
+  /* Material 在此宽度下收起侧栏；正文别再被大 max-width / 大边距挤扁 */
+  .md-main__inner {
+    margin-top: 0.25rem;
+  }
+
+  .md-content__inner {
+    max-width: 100%;
+    margin-inline: 0;
+    padding-bottom: 3.5rem;
+  }
+
+  .md-typeset {
+    font-size: 0.84rem;
+    line-height: 1.8;
+  }
+
+  .md-typeset h1 {
+    margin-bottom: 1.1rem;
+    font-size: 1.55em;
+    line-height: 1.3;
+  }
+
+  .md-typeset h2 {
+    margin-top: 1.8rem;
+    font-size: 1.25em;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+    margin: 0 0 1.4rem;
+    font-size: 0.95rem;
+  }
+
+  .book-card {
+    padding: 1.15rem;
+  }
+
+  /* 数据流：手机上整宽，按钮常显（无 hover） */
+  .formula-flow-host > .arithmatex {
+    padding: 0.55rem 0.65rem 0.65rem;
+  }
+
+  .formula-flow-badge {
+    opacity: 1;
+  }
+
+  .formula-flow-pop {
+    padding: 0.75rem 0.7rem 0.65rem;
+  }
+
+  .formula-flow-pop--wide {
+    max-width: 100%;
+  }
+
+  .formula-flow-matrix__row {
+    grid-template-columns: repeat(var(--ff-cols, 2), minmax(1.6rem, auto));
+  }
+
+  .formula-flow-matrix__cell {
+    min-width: 1.6rem;
+    padding: 0.1rem 0.18rem;
+    font-size: 0.55rem;
+  }
+}
+
+@media screen and (max-width: 30em) {
+  .md-typeset {
+    font-size: 0.88rem;
+  }
+
+  .md-typeset .md-typeset__table,
+  .md-typeset table {
+    font-size: 0.78em;
   }
 }
 

@@ -41,8 +41,8 @@ BOOKS = [
             "第三部分 混合专家/第9章 MoE.md",
             "第三部分 混合专家/第10章 扩容.md",
             "第四部分 长上下文/导读.md",
-            "第四部分 长上下文/第11章 稀疏注意力.md",
-            "第四部分 长上下文/第12章 线性注意力.md",
+            "第四部分 长上下文/第11章 长上下文难在哪.md",
+            "第四部分 长上下文/第12章 稀疏注意力.md",
             "第四部分 长上下文/第13章 状态空间模型.md",
             "第五部分 混合架构/导读.md",
             "第五部分 混合架构/第14章 混合架构.md",
@@ -413,9 +413,16 @@ def main():
     changed = set()
     (DOCS / "stylesheets").mkdir(parents=True, exist_ok=True)
     (DOCS / "javascripts").mkdir(parents=True, exist_ok=True)
+    (DOCS / "assets").mkdir(parents=True, exist_ok=True)
 
     write_text(DOCS / "index.md", HOME, written, changed)
     write_text(DOCS / "about.md", ABOUT, written, changed)
+    copy_asset(
+        HERE / "assets" / "favicon.png",
+        DOCS / "assets" / "favicon.png",
+        written,
+        changed,
+    )
     copy_asset(
         HERE / "stylesheets" / "extra.css",
         DOCS / "stylesheets" / "extra.css",

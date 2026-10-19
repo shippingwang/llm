@@ -3,5 +3,8 @@ __pycache__/
 *.pyc
 .env
 .env.*
+.DS_Store
+notion_sync_state.json
 网站/site/
+网站/docs/
 网站/shippingwang-site.zip

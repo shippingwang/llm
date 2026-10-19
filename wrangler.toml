@@ -1,4 +1,8 @@
+# Cloudflare 新控制台默认跑 `npx wrangler deploy`（Workers + 静态资源）
+# MkDocs 产物在 网站/site；必须写明 assets.directory，否则会报
+# "Could not detect a directory containing static files"
 name = "llm"
 compatibility_date = "2026-10-18"
+
 [assets]
 directory = "网站/site"

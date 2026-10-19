@@ -12,6 +12,8 @@ exclude_docs: |
 theme:
   name: material
   language: zh
+  # 关闭 Google Fonts，避免国内首屏卡死；中文用系统字体（见 extra.css）
+  font: false
   features:
     - navigation.tabs
     - navigation.sections
@@ -23,23 +25,19 @@ theme:
     - search.share
     - content.code.copy
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: white
-      accent: indigo
+    - scheme: default
+      primary: brown
+      accent: green
       toggle:
         icon: material/weather-night
         name: 切换到深色模式
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
+    - scheme: slate
       primary: black
-      accent: indigo
+      accent: green
       toggle:
         icon: material/weather-sunny
         name: 切换到浅色模式
-  font:
-    text: Noto Sans SC
-    code: JetBrains Mono
+  favicon: assets/favicon.png
 
 plugins:
   - search:
@@ -71,7 +69,8 @@ extra_css:
 extra_javascript:
   - javascripts/nav-sections.js
   - javascripts/mathjax-config.js
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  # jsDelivr 在部分网络下慢；改用 BootCDN
+  - https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js
   - javascripts/formula-flow.js
 
 extra:
