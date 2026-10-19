@@ -66,11 +66,12 @@ extra_css:
   - stylesheets/extra.css
 
 extra_javascript:
-  - javascripts/nav-sections.js
+  # config 须同步、先于 MathJax；后两者 defer，避免堵首屏/挡侧栏点击
   - javascripts/mathjax-config.js
-  # jsDelivr 在部分网络下慢；改用 BootCDN
-  - https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js
-  - javascripts/formula-flow.js
+  - path: javascripts/vendor/tex-mml-chtml.js
+    defer: true
+  - path: javascripts/formula-flow.js
+    defer: true
 
 extra:
   generator: false

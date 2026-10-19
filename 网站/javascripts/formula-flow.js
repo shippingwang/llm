@@ -739,31 +739,46 @@
 
   snapshotSources();
 
-  function afterReady(fn) {
+  function afterMathJax(fn) {
     if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
       MathJax.startup.promise.then(fn).catch(fn);
       return;
     }
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(fn, 450);
-      });
-    } else {
-      setTimeout(fn, 450);
-    }
+    // MathJax defer 尚未就绪时别空等 450ms 堵交互；短轮询几次即可
+    var n = 0;
+    (function wait() {
+      if (window.MathJax && MathJax.startup && MathJax.startup.promise) {
+        MathJax.startup.promise.then(fn).catch(fn);
+        return;
+      }
+      if (++n > 40) {
+        fn();
+        return;
+      }
+      setTimeout(wait, 50);
+    })();
   }
 
-  afterReady(function () {
-    run();
-    // Chapter marks should appear even on pages without a local flow host.
+  // 目录小圆点不依赖公式排版，立刻标，别跟 MathJax 绑死
+  function boot() {
     markChapterNav();
+    afterMathJax(function () {
+      run();
+    });
     if (typeof document$ !== "undefined" && document$.subscribe) {
       document$.subscribe(function () {
+        markChapterNav();
         setTimeout(function () {
           snapshotSources();
           run();
-        }, 350);
+        }, 0);
       });
     }
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot);
+  } else {
+    boot();
+  }
 })();

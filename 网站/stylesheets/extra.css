@@ -25,27 +25,32 @@
   --md-code-bg-color: #f3f4f6;
 }
 
+/* 黑夜：黑 / 灰 / 白，不要蓝调 */
 [data-md-color-scheme="slate"] {
-  --ink: #e5e7eb;
-  --ink-soft: #9ca3af;
-  --line: rgba(229, 231, 235, 0.14);
-  --accent: #93c5fd;
+  --ink: #f3f4f6;
+  --ink-soft: #a3a3a3;
+  --line: rgba(255, 255, 255, 0.12);
+  --accent: #d4d4d4;
 }
 
 [data-md-color-scheme="slate"],
 [data-md-color-scheme="slate"] > * {
-  --md-default-bg-color: #0f172a;
+  --md-default-bg-color: #111111;
   --md-default-fg-color: var(--ink);
   --md-default-fg-color--light: var(--ink-soft);
-  --md-default-fg-color--lighter: #6b7280;
+  --md-default-fg-color--lighter: #737373;
   --md-default-fg-color--lightest: var(--line);
-  --md-primary-fg-color: #0f172a;
-  --md-primary-fg-color--light: #0f172a;
-  --md-primary-fg-color--dark: #1e293b;
+  --md-primary-fg-color: #111111;
+  --md-primary-fg-color--light: #111111;
+  --md-primary-fg-color--dark: #1a1a1a;
   --md-primary-bg-color: var(--ink);
   --md-accent-fg-color: var(--accent);
-  --md-typeset-a-color: var(--accent);
-  --md-code-bg-color: #1e293b;
+  --md-typeset-a-color: #e5e5e5;
+  --md-code-bg-color: #1a1a1a;
+  --md-code-fg-color: #e5e5e5;
+  --md-typeset-mark-color: rgba(255, 255, 255, 0.14);
+  --md-footer-bg-color: #0a0a0a;
+  --md-footer-bg-color--dark: #000000;
 }
 
 .md-tabs { display: none; }
@@ -58,7 +63,7 @@
 }
 
 [data-md-color-scheme="slate"] .md-header {
-  background: #0f172a;
+  background: #111111;
 }
 
 .md-header--shadow { box-shadow: none !important; }
@@ -98,7 +103,11 @@
 }
 
 @media screen and (max-width: 720px) {
-  .sw-header__links { display: none; }
+  .sw-header__links {
+    gap: 0.55rem 0.75rem;
+    margin-right: 0.35rem;
+    font-size: 0.78rem;
+  }
 }
 
 .md-search__form {
@@ -108,7 +117,7 @@
 }
 
 [data-md-color-scheme="slate"] .md-search__form {
-  background: #1e293b !important;
+  background: #1a1a1a !important;
 }
 
 .md-search__form:hover,
@@ -119,7 +128,8 @@
 
 [data-md-color-scheme="slate"] .md-search__form:hover,
 [data-md-color-scheme="slate"] .md-search__form:focus-within {
-  background: #0f172a !important;
+  background: #0a0a0a !important;
+  border-color: #a3a3a3;
 }
 
 .md-search__input { color: var(--ink); }
@@ -147,6 +157,10 @@
   color: var(--ink);
 }
 
+[data-md-color-scheme="slate"] .md-sidebar--primary .md-nav__link:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
 /* 只给真正的链接上底色，别给 .md-nav__container 再铺一层（会套娃色块） */
 .md-sidebar--primary a.md-nav__link--active,
 .md-sidebar--primary .md-nav__item--active > a.md-nav__link,
@@ -154,6 +168,12 @@
   color: var(--ink) !important;
   background: rgba(37, 99, 235, 0.1);
   font-weight: 700;
+}
+
+[data-md-color-scheme="slate"] .md-sidebar--primary a.md-nav__link--active,
+[data-md-color-scheme="slate"] .md-sidebar--primary .md-nav__item--active > a.md-nav__link,
+[data-md-color-scheme="slate"] .md-sidebar--secondary a.md-nav__link--active {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .md-sidebar--primary .md-nav__container {
@@ -200,6 +220,16 @@ html[data-book] .md-nav--primary > .md-nav__list > .md-nav__item:not(.md-nav__it
 .md-sidebar--primary .book-section-5 { --section-color: #d97706; }
 .md-sidebar--primary .book-section-appendix { --section-color: #64748b; }
 
+[data-md-color-scheme="slate"] .md-sidebar--primary .book-section-start,
+[data-md-color-scheme="slate"] .md-sidebar--primary .book-section-1,
+[data-md-color-scheme="slate"] .md-sidebar--primary .book-section-2,
+[data-md-color-scheme="slate"] .md-sidebar--primary .book-section-3,
+[data-md-color-scheme="slate"] .md-sidebar--primary .book-section-4,
+[data-md-color-scheme="slate"] .md-sidebar--primary .book-section-5,
+[data-md-color-scheme="slate"] .md-sidebar--primary .book-section-appendix {
+  --section-color: #a3a3a3;
+}
+
 .md-main__inner { max-width: 1440px; }
 
 .md-content__inner {
@@ -211,8 +241,8 @@ html[data-book] .md-nav--primary > .md-nav__list > .md-nav__item:not(.md-nav__it
 .md-typeset {
   font-size: 0.78rem;
   line-height: 1.85;
-  overflow-wrap: anywhere;
-  word-break: break-word;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .md-typeset img { max-width: 100%; height: auto; }
@@ -287,21 +317,79 @@ html[data-book] .md-nav--primary > .md-nav__list > .md-nav__item:not(.md-nav__it
 /* 版权别叠在侧栏上 */
 .md-copyright { display: none; }
 
+/* 手机：别贴边占满屏；左右留白，正文可扫读 */
 @media screen and (max-width: 76.1875em) {
-  .md-main__inner { margin-top: 0.25rem; }
-  .md-content__inner {
-    max-width: 100%;
-    margin-inline: 0;
-    padding-bottom: 3.5rem;
+  .md-main__inner {
+    margin-top: 0.35rem;
   }
-  .md-typeset { font-size: 0.84rem; }
-  .formula-flow-host > .arithmatex { padding: 0.55rem 0.65rem 0.65rem; }
-  .formula-flow-badge { opacity: 1; }
-  .formula-flow-pop { padding: 0.75rem 0.7rem 0.65rem; }
-  .formula-flow-pop--wide { max-width: 100%; }
+
+  .md-content__inner {
+    box-sizing: border-box;
+    width: auto;
+    max-width: 100%;
+    margin: 0 clamp(0.9rem, 4.5vw, 1.35rem) 1.25rem;
+    padding: 0.35rem 0 3.5rem;
+  }
+
+  .md-typeset {
+    font-size: 0.92rem;
+    line-height: 1.8;
+  }
+
+  .md-typeset h1 {
+    font-size: 1.45em;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+  }
+
+  .md-typeset h2 {
+    font-size: 1.2em;
+    margin-top: 1.6rem;
+  }
+
+  .md-typeset h3 {
+    font-size: 1.05em;
+  }
+
+  .book-list a {
+    font-size: 0.98rem;
+    padding: 0.85rem 0;
+  }
+
+  /* 只裁正文横向溢出；别给 .md-main 设 overflow，会连带锁侧栏滚动 */
+  .md-content {
+    overflow-x: clip;
+  }
+
+  .md-typeset pre,
+  .md-typeset .highlight,
+  .md-typeset .arithmatex,
+  .md-typeset .md-typeset__table {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .formula-flow-host > .arithmatex {
+    padding: 0.55rem 0.65rem 0.65rem;
+  }
+
+  .formula-flow-badge {
+    opacity: 1;
+  }
+
+  .formula-flow-pop {
+    padding: 0.75rem 0.7rem 0.65rem;
+  }
+
+  .formula-flow-pop--wide {
+    max-width: 100%;
+  }
+
   .formula-flow-matrix__row {
     grid-template-columns: repeat(var(--ff-cols, 2), minmax(1.6rem, auto));
   }
+
   .formula-flow-matrix__cell {
     min-width: 1.6rem;
     padding: 0.1rem 0.18rem;
@@ -310,7 +398,14 @@ html[data-book] .md-nav--primary > .md-nav__list > .md-nav__item:not(.md-nav__it
 }
 
 @media screen and (max-width: 30em) {
-  .md-typeset { font-size: 0.88rem; }
+  .md-content__inner {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .md-typeset {
+    font-size: 0.95rem;
+  }
 }
 
 

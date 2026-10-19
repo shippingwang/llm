@@ -433,12 +433,6 @@ def main():
         changed,
     )
     copy_asset(
-        HERE / "javascripts" / "nav-sections.js",
-        DOCS / "javascripts" / "nav-sections.js",
-        written,
-        changed,
-    )
-    copy_asset(
         HERE / "javascripts" / "mathjax-config.js",
         DOCS / "javascripts" / "mathjax-config.js",
         written,
@@ -447,6 +441,12 @@ def main():
     copy_asset(
         HERE / "javascripts" / "formula-flow.js",
         DOCS / "javascripts" / "formula-flow.js",
+        written,
+        changed,
+    )
+    copy_asset(
+        HERE / "javascripts" / "vendor" / "tex-mml-chtml.js",
+        DOCS / "javascripts" / "vendor" / "tex-mml-chtml.js",
         written,
         changed,
     )

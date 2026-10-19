@@ -1,49 +1,14 @@
 {% extends "base.html" %}
 
 {% block site_meta %}
+  {#- 构建期就能定当前册，首屏 CSS 即可藏其它册，不必等 location -#}
+  {% set _url = page.url if page else "" %}
+  {% if "01-architecture" in _url %}
+  <script>document.documentElement.setAttribute("data-book","01-architecture");</script>
+  {% elif "02-systems" in _url %}
+  <script>document.documentElement.setAttribute("data-book","02-systems");</script>
+  {% elif "03-post-training" in _url %}
+  <script>document.documentElement.setAttribute("data-book","03-post-training");</script>
+  {% endif %}
   {{ super() }}
-  <script>
-    (function () {
-      var BOOK_RE = /\/(01-architecture|02-systems|03-post-training)(?:\/|$)/;
-      var SECTION = { "一": 1, "二": 2, "三": 3, "四": 4, "五": 5 };
-
-      function syncBook() {
-        var m = location.pathname.match(BOOK_RE);
-        if (m) document.documentElement.setAttribute("data-book", m[1]);
-        else document.documentElement.removeAttribute("data-book");
-      }
-
-      function decorate(root) {
-        if (!root || root.getAttribute("data-sw-decorated") === "1") return;
-        root.querySelectorAll(".md-nav__item").forEach(function (item) {
-          var label = item.querySelector(":scope > .md-nav__link .md-ellipsis");
-          if (!label) return;
-          var title = (label.textContent || "").trim();
-          var m = title.match(/^第([一二三四五])部分/);
-          if (m) {
-            item.classList.add("book-section-start", "book-section-" + SECTION[m[1]]);
-          } else if (/^附录 A\b/.test(title)) {
-            item.classList.add("book-section-start", "book-section-appendix");
-          }
-        });
-        root.setAttribute("data-sw-decorated", "1");
-      }
-
-      syncBook();
-
-      /* 只等侧栏第一次出现，上色后立刻 disconnect，禁止每次点击都全树扫描 */
-      var obs = new MutationObserver(function () {
-        var nav = document.querySelector(".md-nav--primary");
-        if (!nav) return;
-        decorate(nav);
-        obs.disconnect();
-      });
-      obs.observe(document.documentElement, { childList: true, subtree: true });
-
-      document.addEventListener("DOMContentLoaded", function () {
-        decorate(document.querySelector(".md-nav--primary"));
-        obs.disconnect();
-      });
-    })();
-  </script>
 {% endblock %}
