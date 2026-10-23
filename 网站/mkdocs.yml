@@ -101,10 +101,10 @@ nav:
     - "第 9 章 混合专家模型": 01-architecture/14.md
     - "第 10 章 扩容": 01-architecture/15.md
     - "第四部分 长上下文": 01-architecture/16.md
-    - "第 11 章 长上下文的困境": 01-architecture/17.md
-    - "第 12 章 稀疏注意力：局部、块稀疏与可学习检索": 01-architecture/18.md
-    - "第 13 章 线性注意力与状态空间模型": 01-architecture/19.md
-    - "第五部分 现代模型架构": 01-architecture/20.md
+    - "第 11 章 稀疏注意力": 01-architecture/17.md
+    - "第 12 章 线性注意力": 01-architecture/18.md
+    - "第 13 章 状态空间模型": 01-architecture/19.md
+    - "第五部分 混合架构": 01-architecture/20.md
     - "第 14 章 混合架构": 01-architecture/21.md
     - "第 15 章 投机解码": 01-architecture/22.md
     - "第 16 章 Qwen架构解析": 01-architecture/23.md
