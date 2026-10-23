@@ -92,6 +92,10 @@ BOOKS = [
 ]
 
 
+# 暂时只上线第一册；第二/三册目录落到暂无页
+ACTIVE_BOOK_DIRS = {"01-architecture"}
+COMING_SOON_DIRS = ("02-systems", "03-post-training")
+
 HOME = """\
 ---
 hide:
@@ -105,6 +109,18 @@ hide:
   <a href="01-architecture/">第一册 · 现代大模型架构</a>
   <a href="02-systems/">第二册 · 训练与推理系统</a>
   <a href="03-post-training/">第三册 · 后训练与智能体系统</a>
+</div>
+"""
+
+COMING_SOON = """\
+---
+hide:
+  - navigation
+  - toc
+---
+
+<div class="coming-soon-page" markdown="0">
+  <p class="coming-soon-label">暂无</p>
 </div>
 """
 
@@ -385,6 +401,8 @@ def build_nav_yaml() -> str:
     lines = ["nav:", '  - "现代大模型": index.md']
     for book in BOOKS:
         directory = book["directory"]
+        if directory not in ACTIVE_BOOK_DIRS:
+            continue
         title = book["title"].replace('"', '\\"')
         lines.append(f'  - "{title}":')
         lines.append(f"    - {directory}/index.md")
@@ -428,6 +446,12 @@ def main():
         changed,
     )
     copy_asset(
+        HERE / "assets" / "panda.jpg",
+        DOCS / "assets" / "panda.jpg",
+        written,
+        changed,
+    )
+    copy_asset(
         HERE / "stylesheets" / "extra.css",
         DOCS / "stylesheets" / "extra.css",
         written,
@@ -453,7 +477,14 @@ def main():
     )
 
     for book in BOOKS:
+        if book["directory"] not in ACTIVE_BOOK_DIRS:
+            continue
         write_book(book, written, changed)
+
+    for directory in COMING_SOON_DIRS:
+        out = DOCS / directory
+        out.mkdir(parents=True, exist_ok=True)
+        write_text(out / "index.md", COMING_SOON, written, changed)
 
     prune_orphans(written, changed)
     write_mkdocs_nav()

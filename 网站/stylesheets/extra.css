@@ -314,6 +314,61 @@ html[data-book] .md-nav--primary > .md-nav__list > .md-nav__item:not(.md-nav__it
   padding-left: 0.25rem;
 }
 
+/* 第二/三册暂无：熊猫背景，类似个人站首页 */
+body:has(.coming-soon-page) {
+  background-color: #1a1c18 !important;
+}
+
+body:has(.coming-soon-page) .md-header,
+body:has(.coming-soon-page) .md-tabs,
+body:has(.coming-soon-page) .md-sidebar,
+body:has(.coming-soon-page) .md-footer {
+  display: none !important;
+}
+
+body:has(.coming-soon-page) .md-main {
+  margin: 0;
+}
+
+body:has(.coming-soon-page) .md-content {
+  margin: 0;
+  max-width: none;
+}
+
+body:has(.coming-soon-page) .md-content__inner {
+  margin: 0;
+  padding: 0;
+}
+
+body:has(.coming-soon-page) .md-typeset {
+  margin: 0;
+}
+
+.coming-soon-page {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  color: #f4f0e6;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(26, 28, 24, 0.35) 0%,
+      rgba(26, 28, 24, 0.55) 45%,
+      rgba(26, 28, 24, 0.78) 100%
+    ),
+    url("/book/llm/assets/panda.jpg") center / cover no-repeat;
+}
+
+.coming-soon-label {
+  margin: 0;
+  font-size: clamp(2.4rem, 8vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: 0.28em;
+}
+
 /* 版权别叠在侧栏上 */
 .md-copyright { display: none; }
 
