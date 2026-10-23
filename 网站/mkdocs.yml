@@ -109,13 +109,14 @@ nav:
     - "第 15 章 投机解码": 01-architecture/22.md
     - "第 16 章 Qwen架构解析": 01-architecture/23.md
     - "结语": 01-architecture/24.md
-    - "附录 A 从 ResNet 到 CLIP：你已经会的组件在 LLM 里的位置": 01-architecture/25.md
-    - "附录 B 关键节点拆解 Ⅰ：2017–2022，decoder-only 范式的确立": 01-architecture/26.md
-    - "附录 C 关键节点拆解 Ⅱ：2023–2024，开源标准配方与第一轮分化": 01-architecture/27.md
-    - "附录 D 关键节点拆解 Ⅲ：2025–2026，稀疏化、混合化与残差流的重写": 01-architecture/28.md
-    - "附录 E 显存与速度速算表": 01-architecture/29.md
-    - "附录 F muP 与超参迁移": 01-architecture/30.md
-    - "附录 G 多模态入口：视觉怎么接进语言模型": 01-architecture/31.md
+    # 附录暂时下线；恢复时取消注释并同步 sync_content.py 文件列表
+    # - "附录 A 从 ResNet 到 CLIP：你已经会的组件在 LLM 里的位置": 01-architecture/25.md
+    # - "附录 B 关键节点拆解 Ⅰ：2017–2022，decoder-only 范式的确立": 01-architecture/26.md
+    # - "附录 C 关键节点拆解 Ⅱ：2023–2024，开源标准配方与第一轮分化": 01-architecture/27.md
+    # - "附录 D 关键节点拆解 Ⅲ：2025–2026，稀疏化、混合化与残差流的重写": 01-architecture/28.md
+    # - "附录 E 显存与速度速算表": 01-architecture/29.md
+    # - "附录 F muP 与超参迁移": 01-architecture/30.md
+    # - "附录 G 多模态入口：视觉怎么接进语言模型": 01-architecture/31.md
   - "第二册 · 大模型训练与推理系统":
     - 02-systems/index.md
     - "第一部分 硬件性能与资源模型": 02-systems/01.md
