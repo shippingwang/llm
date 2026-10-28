@@ -345,9 +345,6 @@ def count_moe_ffn(m: MoESwiGLU) -> tuple[int, int]:
 
 专家分布在多张卡上时，token 按路由结果发送到持有对应专家的设备，计算完成后再返回原序列位置。这两次重排通常通过 all-to-all 完成。显存仍按总参数估：235B 总参的 bf16 权重约 470 GB；激活参数只描述一次前向实际经过多少权重。专家并行的通信量，负载偏斜与 grouped GEMM 效率共同决定实际吞吐。
 
-## 动手
-
-在第 8 章的小模型上使用 `n_experts=8`，`n_experts_per_tok=2`，`n_shared_experts=1`。先固定 `route_bias=0`，记录 `_last_loads`；再启用偏置更新，对比负载分布。用 `count_moe_ffn` 核对总参与激活参数，并用 \(P_{\text{active}}\) 重估 Decode 成本。
 
 ---
 
