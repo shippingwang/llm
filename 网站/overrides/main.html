@@ -12,3 +12,25 @@
   {% endif %}
   {{ super() }}
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {#- MathJax：先 CDN，onerror 立刻本地，不空等 -#}
+  <script>
+  (function () {
+    var localUrl = "{{ base_url }}/javascripts/vendor/tex-mml-chtml.js";
+    var cdnUrl =
+      "https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js";
+    function load(src, onerror) {
+      var s = document.createElement("script");
+      s.src = src;
+      s.defer = true;
+      if (onerror) s.onerror = onerror;
+      document.head.appendChild(s);
+    }
+    load(cdnUrl, function () {
+      load(localUrl);
+    });
+  })();
+  </script>
+{% endblock %}
