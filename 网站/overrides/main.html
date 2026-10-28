@@ -12,3 +12,38 @@
   {% endif %}
   {{ super() }}
 {% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {#- bootcdn 主脚本挂了时回退到仓库自带的 vendor（约 1.2MB，慢但仍可用） -#}
+  <script>
+  (function () {
+    var deadline = Date.now() + 8000;
+    function needFallback() {
+      return !(window.MathJax && MathJax.typesetPromise);
+    }
+    function injectLocal() {
+      if (!needFallback()) return;
+      if (document.getElementById("mathjax-local-fallback")) return;
+      var s = document.createElement("script");
+      s.id = "mathjax-local-fallback";
+      s.defer = true;
+      s.src = "{{ base_url }}/javascripts/vendor/tex-mml-chtml.js";
+      document.body.appendChild(s);
+    }
+    function poll() {
+      if (!needFallback()) return;
+      if (Date.now() >= deadline) {
+        injectLocal();
+        return;
+      }
+      setTimeout(poll, 400);
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", poll);
+    } else {
+      poll();
+    }
+  })();
+  </script>
+{% endblock %}
