@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r 网站/requirements.txt
 
+      - name: Check manuscript math
+        run: python 网站/check_math.py
+
       - name: Generate pages from manuscripts
         run: python 网站/sync_content.py
 
