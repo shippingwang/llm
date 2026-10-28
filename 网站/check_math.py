@@ -47,6 +47,10 @@ def check_file(path: Path) -> list[str]:
     for i, line in enumerate(text.splitlines(), 1):
         if FRAC_SHORTHAND.search(line):
             errors.append(f"{rel}:{i}: 疑似 \\frac1d 简写，请写成 \\frac{{1}}{{d}}")
+        if "「" in line or "」" in line:
+            errors.append(f"{rel}:{i}: 禁止直角引号「」，请删掉或改用加粗/《》")
+        if "、" in line:
+            errors.append(f"{rel}:{i}: 禁止顿号「、」，请改成逗号「，」")
     # 定界符数量
     n_inline_open, n_inline_close = text.count(r"\("), text.count(r"\)")
     if n_inline_open != n_inline_close:
@@ -74,6 +78,12 @@ def fix_file(path: Path) -> bool:
 
     text = INLINE_MATH.sub(promote_inline, text)
     text = FRAC_SHORTHAND.sub(r"\\frac{\1}{\2}", text)
+    if "「" in text or "」" in text:
+        text = text.replace("「", "").replace("」", "")
+    if "、" in text:
+        text = text.replace("、", "，")
+        while "，，" in text:
+            text = text.replace("，，", "，")
 
     if text != original:
         path.write_text(text, encoding="utf-8")

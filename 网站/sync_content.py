@@ -203,7 +203,7 @@ def _manuscript_stem_key(filename: str) -> Optional[str]:
 def resolve_manuscript(source_dir: Path, relative_path: str) -> Path:
     """Resolve a listed manuscript path; tolerate folder and title renames.
 
-    Order: exact path → same filename under「第N部分*」→ same stem key
+    Order: exact path → same filename under 第N部分* → same stem key
     (序章 / 第N章 / 附录X / 导读 / 尾声) in the listed directory, then anywhere
     under the book root.
     """
