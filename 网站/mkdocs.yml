@@ -66,8 +66,10 @@ extra_css:
   - stylesheets/extra.css
 
 extra_javascript:
-  # config 先于主脚本；主脚本在 overrides 里 CDN+本地回退（避免自建 1.2MB 拉挂）
+  # config 须同步、先于 MathJax；后两者 defer，避免堵首屏/挡侧栏点击
   - javascripts/mathjax-config.js
+  - path: javascripts/vendor/tex-mml-chtml.js
+    defer: true
   - path: javascripts/formula-flow.js
     defer: true
 
