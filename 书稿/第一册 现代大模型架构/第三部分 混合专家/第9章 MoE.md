@@ -41,7 +41,7 @@ s=(s_1,s_2,\ldots,s_N).
 取其中最大的 \(k\) 项，其下标构成专家集合
 
 \[
-\mathcal T(x)=\operatorname{TopK}(s,k).
+\mathcal{T}(x)=\operatorname{TopK}(s,k).
 \]
 
 选中专家的输出按路由权重相加：
@@ -49,7 +49,7 @@ s=(s_1,s_2,\ldots,s_N).
 \[
 \operatorname{MoE}(x)
 =
-\sum_{i\in\mathcal T(x)}
+\sum_{i\in\mathcal{T}(x)}
 g_i(x)E_i(x).
 \]
 
@@ -59,8 +59,8 @@ g_i(x)E_i(x).
 g_i(x)
 =
 \frac{\exp(s_i)}
-{\sum_{j\in\mathcal T(x)}\exp(s_j)},
-\qquad i\in\mathcal T(x).
+{\sum_{j\in\mathcal{T}(x)}\exp(s_j)},
+\qquad i\in\mathcal{T}(x).
 \]
 
 因此 \(\sum_i g_i=1\)。权重较大的专家对当前 token 的输出影响更大。
@@ -112,7 +112,7 @@ P_{\mathrm{active,ffn}}
 记一个 batch 中发给专家 \(i\) 的 token 比例为 \(f_i\)，路由器分给专家 \(i\) 的平均概率为 \(p_i\)。常见的均衡项为
 
 \[
-\mathcal L_{\mathrm{balance}}
+\mathcal{L}_{\mathrm{balance}}
 =
 \alpha N\sum_{i=1}^{N}f_ip_i.
 \]
@@ -120,11 +120,11 @@ P_{\mathrm{active,ffn}}
 训练使用
 
 \[
-\mathcal L
+\mathcal{L}
 =
-\mathcal L_{\mathrm{LM}}
+\mathcal{L}_{\mathrm{LM}}
 +
-\mathcal L_{\mathrm{balance}}.
+\mathcal{L}_{\mathrm{balance}}.
 \]
 
 当分配接近均匀时，\(f_i\) 与 \(p_i\) 都接近 \(1/N\)。某个专家同时具有较高路由概率和较高 token 占比时，均衡项增大。\(\alpha\) 控制均衡强度：取值过小，专家仍可能拥挤；取值过大，路由器会为了均匀而牺牲语言模型目标。
@@ -148,7 +148,7 @@ c\frac{Tk}{N}
 免辅助损失的方法为每个专家维护一个偏置 \(b_i\)。选择专家时使用
 
 \[
-\mathcal T(x)
+\mathcal{T}(x)
 =
 \operatorname{TopK}(s+b,k),
 \]

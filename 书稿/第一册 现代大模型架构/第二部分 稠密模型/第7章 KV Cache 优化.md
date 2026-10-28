@@ -4,7 +4,7 @@
 在标准多头注意力（MHA）里，每个 Q 头都配一个自己的 K 头和 V 头。KV 显存 = `2 × 2 × L × h × d_h × n × B`。
 
 \[
-Q,K,V\in\mathbb R^{B\times h\times n\times d_h}.
+Q,K,V\in\mathbb{R}^{B\times h\times n\times d_h}.
 \]
 
 以 32 头，36 层，head_dim 128 的模型算：每 token 每层 16 KB，全模型 576 KB/token，32K 上下文单请求就是 19 GB
@@ -15,7 +15,7 @@ Q,K,V\in\mathbb R^{B\times h\times n\times d_h}.
 
 所有 Q 头共用一组 K/V。KV 显存直接除以头数，32 头就是省 32 倍。
 
-此时 \(Q\in\mathbb R^{B\times h\times n\times d_h}\)，而 \(K,V\in\mathbb R^{B\times1\times n\times d_h}\)，计算时把同一组 K/V 广播给所有 Q 头。但是所有头共享同一套“索引和内容”，模型泛化性低。
+此时 \(Q\in\mathbb{R}^{B\times h\times n\times d_h}\)，而 \(K,V\in\mathbb{R}^{B\times1\times n\times d_h}\)，计算时把同一组 K/V 广播给所有 Q 头。但是所有头共享同一套“索引和内容”，模型泛化性低。
 
 
 ## 7.2 GQA

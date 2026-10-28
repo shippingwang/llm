@@ -51,6 +51,10 @@ def check_file(path: Path) -> list[str]:
             errors.append(f"{rel}:{i}: 禁止直角引号「」，请删掉或改用加粗/《》")
         if "、" in line:
             errors.append(f"{rel}:{i}: 禁止顿号「、」，请改成逗号「，」")
+        if re.search(r"\\(boldsymbol|mathbf|mathit|mathrm|mathsf|mathbb|mathcal)\s*[A-Za-z]", line):
+            errors.append(
+                f"{rel}:{i}: 数学命令缺花括号，请写成 \\mathbb{{R}} / \\boldsymbol{{z}} 这种"
+            )
     # 定界符数量
     n_inline_open, n_inline_close = text.count(r"\("), text.count(r"\)")
     if n_inline_open != n_inline_close:
@@ -84,6 +88,12 @@ def fix_file(path: Path) -> bool:
         text = text.replace("、", "，")
         while "，，" in text:
             text = text.replace("，，", "，")
+    text2 = re.sub(
+        r"\\(boldsymbol|mathbf|mathit|mathrm|mathsf|mathbb|mathcal)\s*([A-Za-z])(?![a-zA-Z])",
+        r"\\\1{\2}",
+        text,
+    )
+    text = text2
 
     if text != original:
         path.write_text(text, encoding="utf-8")
