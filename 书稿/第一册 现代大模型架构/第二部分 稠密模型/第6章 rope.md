@@ -24,42 +24,50 @@ h^{(0)}_t=E[x_t]+\mathrm{PE}(t)
 ## 6.1 RoPE
 
 
-以序列 $\boldsymbol{[\text{Birds},\ \text{sing},\ \text{up},\ \text{in},\ \text{the},\ \text{tree}]}$ 为例，下标依次是 $\(0,1,2,3,4,5\)$，我们计算位置 $5$（token：tree）的注意力。
+以序列 \(\boldsymbol{[\text{Birds},\ \text{sing},\ \text{up},\ \text{in},\ \text{the},\ \text{tree}]}\) 为例，下标依次是 \(0,1,2,3,4,5\)，我们计算位置 \(5\)（token：tree）的注意力。
 
-对每个下标 $j$，算出 $q_j,k_j,v_j$。RoPE 只旋转 $q$ 和 $k$，$v$ 保持原值不旋转。
-$R_j$ 是下标 $j$ 对应的旋转矩阵，转角 $j\cdot\omega$：
-$$
+对每个下标 \(j\)，算出 \(q_j,k_j,v_j\)。RoPE 只旋转 \(q\) 和 \(k\)，\(v\) 保持原值不旋转。
+\(R_j\) 是下标 \(j\) 对应的旋转矩阵，转角 \(j\cdot\omega\)：
+
+\[
 R(j\omega)=
 \begin{bmatrix}
 \cos(j\omega) & -\sin(j\omega)\\
 \sin(j\omega) & \cos(j\omega)
 \end{bmatrix}
-$$
-位置 $5$ 的 query 先做旋转得到 $R_5 q_5$；历史上每个位置 $j$ 的 key，各自用自己的 $R_j$ 旋转得到 $R_j k_j$。
-注意力打分：
-$$
-s_{5,j}=\frac{(R_5 q_5)^\top(R_j k_j)}{\sqrt{d_h}}
-$$
+\]
 
-例如： $q_5$（tree）和 $k_1$（sing）。
-设单步转角 $\omega=30^\circ$：
-$R_5$ 旋转 $5\times30^\circ=150^\circ$，$R_1$ 旋转 $1\times30^\circ=30^\circ$。
+位置 \(5\) 的 query 先做旋转得到 \(R_5 q_5\)；历史上每个位置 \(j\) 的 key，各自用自己的 \(R_j\) 旋转得到 \(R_j k_j\)。
+注意力打分：
+
+\[
+s_{5,j}=\frac{(R_5 q_5)^\top(R_j k_j)}{\sqrt{d_h}}
+\]
+
+
+例如： \(q_5\)（tree）和 \(k_1\)（sing）。
+设单步转角 \(\omega=30^\circ\)：
+\(R_5\) 旋转 \(5\times30^\circ=150^\circ\)，\(R_1\) 旋转 \(1\times30^\circ=30^\circ\)。
 恒等式：
-$$
+
+\[
 (R_m q)^\top(R_n k)=q^\top R_{n-m}\,k
-$$
-可以看到，点积结果只和位置差 $n-m$ 有关。
+\]
+
+可以看到，点积结果只和位置差 \(n-m\) 有关。
 
 `sing` 在位置1，`tree` 在位置5，位置差为4；
 如果把 `sing` 挪到位置4，和 `tree` 只差1，二者QK点积分数会明显变大。
 
 
-打分经过 softmax 得到权重 $\alpha_{5,j}$，再拿原始，未旋转的 $v_j$ 加权求和，得到该位置输出：
-$$
-o_5=\sum_{j=0}^5 \alpha_{5,j}\,v_j
-$$
+打分经过 softmax 得到权重 \(\alpha_{5,j}\)，再拿原始，未旋转的 \(v_j\) 加权求和，得到该位置输出：
 
-工程实现上，头维拆成多组独立二维子向量，每组频率 $\omega_i=\theta_{\text{base}}^{-2i/d_{\text{rope}}}$，由 `rope_theta` 控制基频。靠前维度频率高，侧重捕捉临近词；靠后维度频率低，适合长距离依赖。RoPE不引入新参数，代替绝对编码成为当前主流模型的基础组件。
+\[
+o_5=\sum_{j=0}^5 \alpha_{5,j}\,v_j
+\]
+
+
+工程实现上，头维拆成多组独立二维子向量，每组频率 \(\omega_i=\theta_{\text{base}}^{-2i/d_{\text{rope}}}\)，由 `rope_theta` 控制基频。靠前维度频率高，侧重捕捉临近词；靠后维度频率低，适合长距离依赖。RoPE不引入新参数，代替绝对编码成为当前主流模型的基础组件。
 
 
 ## 6.2 现代位置表示
