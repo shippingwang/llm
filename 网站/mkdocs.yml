@@ -66,9 +66,9 @@ extra_css:
   - stylesheets/extra.css
 
 extra_javascript:
-  # config 须同步、先于 MathJax。主脚本改走 CDN：自建 vendor 约 1.2MB，慢网下拉挂会整页公式露源码
+  # config 须同步、先于 MathJax；后两者 defer，避免堵首屏
   - javascripts/mathjax-config.js
-  - path: https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js
+  - path: javascripts/vendor/tex-mml-chtml.js
     defer: true
   - path: javascripts/formula-flow.js
     defer: true
