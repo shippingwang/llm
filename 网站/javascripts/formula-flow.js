@@ -160,15 +160,16 @@
     {
       id: "attention",
       test: function (src) {
-        // TeX is \operatorname{Attention}(Q,K,V) → "Attention}(Q"
+        // 原稿: \operatorname{Attention}(Q,K,V)=softmax((QK^\top)/√d_h+M)V
+        // MathJax 排版后 textContent 可能变成 “Attention(Q,K,V)” + “√”，不再含 sqrt
         return (
           /Attention\}?\s*\(\s*Q\s*,\s*K\s*,\s*V\s*\)/.test(src) &&
-          /softmax/.test(src) &&
-          /sqrt/.test(src)
+          /softmax/i.test(src) &&
+          (/sqrt|√|d_h|dₕ/.test(src) || /\+ ?M/.test(src))
         );
       },
       title: "Attention",
-      subtitle: "n = 3 · d = 4 · d_h = 2 · 因果掩码（示意）",
+      subtitle: "n = 3 · d = 4 · d_h = 2 · 因果掩码（示意数字）",
       wide: true,
       steps: [
         {
@@ -180,7 +181,7 @@
             ["0.20", "0.40", "0.10", "−0.10"],
             ["0.00", "0.30", "0.50", "0.20"],
           ],
-          note: "三个位置，每个隐藏维 d = 4",
+          note: "三行 = 三个位置；每行隐藏维 d = 4。公式里的 Q,K,V 都从这张 X 投出来",
         },
         {
           label: "三个投影矩阵",
@@ -215,7 +216,7 @@
               ],
             },
           ],
-          note: "同一 X 分别乘三块权重，得到 Q、K、V",
+          note: "同一 X 分别右乘三块权重：W_Q 编“拿什么去问”，W_K 编“门牌标签”，W_V 编“对上后交出的内容”",
         },
         {
           label: "得到 Q、K、V",
@@ -247,7 +248,7 @@
               ],
             },
           ],
-          note: "行 = 位置；列 = 头内维 d_h",
+          note: "行 = 位置，列 = 头维 d_h。后面分数只用 Q 与 K；真正写进输出的是 V",
         },
         {
           label: "分数表",
@@ -258,7 +259,7 @@
             ["0.35", "1.50", "0.60"],
             ["0.25", "0.70", "1.10"],
           ],
-          note: "第 i 行 = 位置 i 对所有位置的原始分数",
+          note: "S_ij = q_iᵀ k_j / √d_h。第 i 行 = 位置 i 问遍所有位置；除 √d_h 防止维数一大点积爆炸",
         },
         {
           label: "加因果掩码",
@@ -269,29 +270,29 @@
             ["0.35", "1.50", "−∞"],
             ["0.25", "0.70", "1.10"],
           ],
-          note: "严格上三角置 −∞，右边位置看不见",
+          note: "严格上三角（j>i）置 −∞：位置 0 只能看自己；位置 1 看得见 0,1；位置 2 全可见",
         },
         {
           label: "行内 softmax",
-          tex: "α",
+          tex: "α = softmax(S+M)",
           shape: "3×3",
           matrix: [
             ["1.00", "0", "0"],
             ["0.24", "0.76", "0"],
             ["0.18", "0.28", "0.54"],
           ],
-          note: "每一行和为 1；被掩码的格子权重为 0",
+          note: "公式里的 softmax 按行做。每行和为 1；−∞ 处权重变 0。α 只决定“看谁、看多少”",
         },
         {
           label: "加权 Value",
-          tex: "α V",
+          tex: "O = α V",
           shape: "3×2",
           matrix: [
             ["0.40", "0.10"],
             ["0.25", "0.25"],
             ["0.19", "0.23"],
           ],
-          note: "内容来自 V，比例来自 α；输出仍是 n×d_h",
+          note: "o_i = Σ_j α_ij v_j。内容全部来自 V；输出形状仍是 n×d_h，对应公式最外层右乘 V",
         },
       ],
     },
@@ -544,15 +545,30 @@
       });
   }
 
+  function latexFromDom(el) {
+    var ann = el.querySelector(
+      'annotation[encoding="application/x-tex"], annotation[encoding="TeX"]'
+    );
+    if (ann && ann.textContent) return ann.textContent;
+    var mjx = el.querySelector("mjx-assistive-mml");
+    if (mjx && mjx.getAttribute("title")) return mjx.getAttribute("title");
+    return el.textContent || "";
+  }
+
   function snapshotSources() {
     document.querySelectorAll(".arithmatex").forEach(function (el) {
-      if (el.getAttribute("data-ff-src")) return;
-      el.setAttribute("data-ff-src", el.textContent || "");
+      var cur = latexFromDom(el);
+      if (!cur) return;
+      var prev = el.getAttribute("data-ff-src") || "";
+      // 优先留下带反斜杠的 TeX；若先前抓到的是排版后的 Unicode，允许被更好的源替换
+      if (!prev || (cur.indexOf("\\") !== -1 && prev.indexOf("\\") === -1)) {
+        el.setAttribute("data-ff-src", cur);
+      }
     });
   }
 
   function sourceOf(el) {
-    return el.getAttribute("data-ff-src") || el.textContent || "";
+    return el.getAttribute("data-ff-src") || latexFromDom(el) || "";
   }
 
   function findFlow(src) {
