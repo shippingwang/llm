@@ -51,9 +51,13 @@ def check_file(path: Path) -> list[str]:
             errors.append(f"{rel}:{i}: 禁止直角引号「」，请删掉或改用加粗/《》")
         if "、" in line:
             errors.append(f"{rel}:{i}: 禁止顿号「、」，请改成逗号「，」")
-        if re.search(r"\\(boldsymbol|mathbf|mathit|mathrm|mathsf|mathbb|mathcal)\s*[A-Za-z]", line):
+        if re.search(r"\\(mathbf|mathit|mathrm|mathsf|mathbb|mathcal|boldsymbol)\s*[A-Za-z]", line):
             errors.append(
-                f"{rel}:{i}: 数学命令缺花括号，请写成 \\mathbb{{R}} / \\boldsymbol{{z}} 这种"
+                f"{rel}:{i}: 数学命令缺花括号，请写成 \\mathbb{{R}} / \\mathbf{{z}} 这种"
+            )
+        if r"\boldsymbol" in line:
+            errors.append(
+                f"{rel}:{i}: 禁止 \\boldsymbol（本地 MathJax 无此扩展，会拖死整页公式），请改成 \\mathbf"
             )
     # 定界符数量
     n_inline_open, n_inline_close = text.count(r"\("), text.count(r"\)")
@@ -88,12 +92,13 @@ def fix_file(path: Path) -> bool:
         text = text.replace("、", "，")
         while "，，" in text:
             text = text.replace("，，", "，")
-    text2 = re.sub(
+    text = re.sub(
         r"\\(boldsymbol|mathbf|mathit|mathrm|mathsf|mathbb|mathcal)\s*([A-Za-z])(?![a-zA-Z])",
         r"\\\1{\2}",
         text,
     )
-    text = text2
+    # 本地 vendor 无 boldsymbol 扩展：整页公式会卡在 404
+    text = text.replace(r"\boldsymbol", r"\mathbf")
 
     if text != original:
         path.write_text(text, encoding="utf-8")
