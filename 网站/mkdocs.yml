@@ -19,6 +19,7 @@ theme:
     - navigation.sections
     - navigation.indexes
     - navigation.top
+    - navigation.footer
     - toc.follow
     - search.highlight
     - content.code.copy
