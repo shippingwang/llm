@@ -49,14 +49,9 @@ BOOKS = [
             "第五部分 混合架构/第15章 投机解码.md",
             "第五部分 混合架构/第16章 Qwen架构解析.md",
             "第五部分 混合架构/结语.md",
-            # 暂时不上线附录；恢复时取消注释并同步 mkdocs.yml 导航
-            # "附录/附录A 从ResNet到CLIP.md",
-            # "附录/附录B 关键节点2017-2022.md",
-            # "附录/附录C 关键节点2023-2024.md",
-            # "附录/附录D 关键节点2025-2026.md",
-            # "附录/附录E 显存与速度速算表.md",
-            # "附录/附录F muP与超参迁移.md",
-            # "附录/附录G 多模态入口.md",
+            "附录/附录A 数学知识.md",
+            "附录/附录B 神经网络层结构.md",
+            "附录/附录C 关键节点.md",
         ],
     },
     {
@@ -407,9 +402,21 @@ def build_nav_yaml() -> str:
         lines.append(f'  - "{title}":')
         lines.append(f"    - {directory}/index.md")
         pages = sorted((DOCS / directory).glob("[0-9][0-9].md"))
+        appendix_open = False
         for page in pages:
             page_title = _page_nav_title(page).replace('"', '\\"')
-            lines.append(f'    - "{page_title}": {directory}/{page.name}')
+            is_appendix = page_title.startswith("附录")
+            if is_appendix and not appendix_open:
+                lines.append('    - "附录":')
+                appendix_open = True
+            if appendix_open and is_appendix:
+                lines.append(
+                    f'      - "{page_title}": {directory}/{page.name}'
+                )
+            else:
+                if appendix_open and not is_appendix:
+                    appendix_open = False
+                lines.append(f'    - "{page_title}": {directory}/{page.name}')
     return "\n".join(lines) + "\n"
 
 

@@ -51,7 +51,7 @@
     {% set class = class ~ " book-section-start book-section-4" %}
   {% elif _t.startswith("第五部分") %}
     {% set class = class ~ " book-section-start book-section-5" %}
-  {% elif _t.startswith("附录 A") or _t.startswith("附录A") %}
+  {% elif _t == "附录" or _t.startswith("附录 A") or _t.startswith("附录A") %}
     {% set class = class ~ " book-section-start book-section-appendix" %}
   {% endif %}
   {% if nav_item.pages %}
