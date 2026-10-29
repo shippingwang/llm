@@ -75,22 +75,16 @@ BOOKS = [
         "description": "围绕任务数据、监督微调、偏好对齐、推理训练、评测体系和 Agent 构建完整迭代闭环。",
         "source": "第三册 改模型",
         "files": [
+            # 先只上线目录总览；正文章节未定稿前不要往这里加
             "00 目录总览.md",
-            "第一部分 定义目标.md",
-            "第二部分 用示范教模型.md",
-            "第三部分 偏好与强化学习.md",
-            "第四部分 评测与迭代.md",
-            "第五部分 上下文与Agent.md",
-            "附录 多模态后训练.md",
         ],
     },
 ]
 
 
-# 暂时只上线第一册；第二/三册目录落到暂无页
-ACTIVE_BOOK_DIRS = {"01-architecture"}
-COMING_SOON_DIRS = ("02-systems", "03-post-training")
-
+# 第一册全文 + 第三册目录；第二册仍暂无
+ACTIVE_BOOK_DIRS = {"01-architecture", "03-post-training"}
+COMING_SOON_DIRS = ("02-systems",)
 HOME = """\
 ---
 hide:

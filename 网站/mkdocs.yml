@@ -114,4 +114,6 @@ nav:
       - "附录A 数学知识": 01-architecture/25.md
       - "附录B 神经网络层结构": 01-architecture/26.md
       - "附录C 关键节点": 01-architecture/27.md
+  - "第三册 · 大模型后训练与智能体系统":
+    - 03-post-training/index.md
 # END_NAV
