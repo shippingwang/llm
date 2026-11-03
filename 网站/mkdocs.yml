@@ -122,18 +122,10 @@ nav:
     - "第3章 CoT": 03-post-training/04.md
     - "第二部分 强化学习": 03-post-training/05.md
     - "第 4 章 偏好优化": 03-post-training/06.md
-    - "第 5 章 奖励模型": 03-post-training/07.md
+    - "第5章 奖励模型与强化学习对齐": 03-post-training/07.md
     - "第三部分 推理时": 03-post-training/08.md
-    - "第 6 章 TTT": 03-post-training/09.md
-    - "第 7 章 ICL": 03-post-training/10.md
-    - "第 8 章 RAG": 03-post-training/11.md
-    - "第四部分 智能体": 03-post-training/12.md
-    - "第 9 章 Skill": 03-post-training/13.md
-    - "第 10 章 Agent": 03-post-training/14.md
-    - "第 11 章 harness": 03-post-training/15.md
-    - "第五部分 评测": 03-post-training/16.md
-    - "第 12 章 数据与评测": 03-post-training/17.md
-    - "第六部分 新形态": 03-post-training/18.md
-    - "第 13 章 世界模型": 03-post-training/19.md
-    - "第 14 章 决策模型": 03-post-training/20.md
+    - "第6章 TTT": 03-post-training/09.md
+    - "第四部分 智能体": 03-post-training/10.md
+    - "第五部分 评测": 03-post-training/11.md
+    - "第 12 章 数据与评测": 03-post-training/12.md
 # END_NAV
